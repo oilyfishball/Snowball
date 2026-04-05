@@ -126,10 +126,7 @@ npm install
        for each row execute function public.handle_new_user();
      ```
 
-4. **(Optional) Configure Auth Triggers:**
-   - Set up a trigger to auto-create a profile when a new user signs up. See [Supabase docs](https://supabase.com/docs/guides/auth/managing-user-data#using-triggers) for details.
-
-5. **Seed the Database:**
+4. **Seed the Database:**
    - Run the seed script to populate Supabase with users and posts from `seed.json`:
      ```sh
      npx tsx scripts/seed.ts
