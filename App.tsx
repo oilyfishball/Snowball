@@ -1,4 +1,4 @@
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Alert } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { useState, useEffect } from 'react';
 import { NavigationContainer, DarkTheme } from '@react-navigation/native';
@@ -33,7 +33,21 @@ function HomeScreen() {
       ) : (
         <CreatePost />
       )}
-      <TabBar tabs={TABS} activeTab={activeTab} onTabPress={setActiveTab} />
+      <TabBar
+        tabs={TABS}
+        activeTab={activeTab}
+        onTabPress={setActiveTab}
+        onLogout={() => {
+          Alert.alert(
+            'Confirm Logout',
+            'Are you sure you want to log out?',
+            [
+              { text: 'Cancel', style: 'cancel' },
+              { text: 'Log Out', style: 'destructive', onPress: async () => { await supabase.auth.signOut(); } },
+            ]
+          );
+        }}
+      />
       <StatusBar style="light" />
     </View>
   );
@@ -83,6 +97,6 @@ export default App;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1a1a2e',
+    backgroundColor: '#181A20', // Classic Charcoal background
   },
 });

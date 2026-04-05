@@ -55,12 +55,29 @@ interface Post {
 
 const PAGE_SIZE = 20;
 
+
 export function Feed() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
+  const [username, setUsername] = useState<string | null>(null);
   const [refreshing, setRefreshing] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
   const [hasMore, setHasMore] = useState(true);
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if (user) {
+        supabase
+          .from('profiles')
+          .select('username')
+          .eq('id', user.id)
+          .single()
+          .then(({ data }) => {
+            if (data?.username) setUsername(data.username);
+          });
+      }
+    });
+  }, []);
 
   const fetchPosts = useCallback(async (fromStart = true) => {
     if (fromStart) {
@@ -120,58 +137,74 @@ export function Feed() {
     }
   };
 
-  const renderPost = ({ item }: { item: Post }) => (
-    <View style={styles.card}>
-      <View style={styles.cardHeader}>
-        <Text style={styles.author}>{item.username}</Text>
-        <Text style={styles.date}>
-          {new Date(item.created_at).toLocaleDateString()}
-        </Text>
+  const renderPost = ({ item }: { item: Post }) => {
+    return (
+      <View style={styles.card}>
+        <View style={styles.cardHeader}>
+          <Text style={styles.author}>{item.username}</Text>
+          <Text style={styles.date}>
+            {new Date(item.created_at).toLocaleDateString()}
+          </Text>
+        </View>
+        <Text style={styles.title}>{item.title}</Text>
+        {item.description ? (
+          <Text style={styles.description}>{item.description}</Text>
+        ) : null}
+        {item.image_url ? (
+          <PostImage uri={item.image_url} />
+        ) : null}
       </View>
-      <Text style={styles.title}>{item.title}</Text>
-      {item.description ? (
-        <Text style={styles.description}>{item.description}</Text>
-      ) : null}
-      {item.image_url ? (
-        <PostImage uri={item.image_url} />
-      ) : null}
-    </View>
-  );
+    );
+  };
 
   if (loading) {
     return (
       <View style={styles.centered}>
-        <ActivityIndicator size="large" color="#4f46e5" />
+        <ActivityIndicator size="large" color="#FFBE0B" />
       </View>
     );
   }
 
   return (
-    <FlatList
-      data={posts}
-      keyExtractor={(item) => item.id}
-      renderItem={renderPost}
-      contentContainerStyle={styles.list}
-      refreshControl={
-        <RefreshControl
-          refreshing={refreshing}
-          onRefresh={onRefresh}
-          tintColor="#4f46e5"
-        />
-      }
-      onEndReached={onEndReached}
-      onEndReachedThreshold={0.5}
-      ListFooterComponent={
-        loadingMore ? (
-          <ActivityIndicator style={styles.footer} color="#4f46e5" />
-        ) : null
-      }
-      ListEmptyComponent={
-        <View style={styles.centered}>
-          <Text style={styles.emptyText}>No posts yet</Text>
-        </View>
-      }
-    />
+    <View style={{ flex: 1 }}>
+      <FlatList
+        data={posts}
+        keyExtractor={(item) => item.id}
+        renderItem={renderPost}
+        contentContainerStyle={styles.list}
+        ListHeaderComponent={
+          <View style={styles.welcomeContainer}>
+            {username ? (
+              <>
+                <Text style={styles.welcomeText}>Welcome Back</Text>
+                <Text style={styles.usernameText}>{username}!</Text>
+              </>
+            ) : (
+              <Text style={styles.welcomeText}>Welcome!</Text>
+            )}
+          </View>
+        }
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            tintColor="#FFBE0B"
+          />
+        }
+        onEndReached={onEndReached}
+        onEndReachedThreshold={0.5}
+        ListFooterComponent={
+          loadingMore ? (
+            <ActivityIndicator style={styles.footer} color="#FFBE0B" />
+          ) : null
+        }
+        ListEmptyComponent={
+          <View style={styles.centered}>
+            <Text style={styles.emptyText}>No posts yet</Text>
+          </View>
+        }
+      />
+    </View>
   );
 }
 
@@ -181,13 +214,33 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  welcomeContainer: {
+    paddingTop: 60,
+    paddingBottom: 16,
+    paddingHorizontal: 16,
+    alignItems: 'flex-start',
+  },
+  welcomeText: {
+    color: '#FFFFFF',
+    fontSize: 32,
+    fontWeight: '700',
+    letterSpacing: 0.5,
+    lineHeight: 38,
+  },
+  usernameText: {
+    color: '#FFBE0B',
+    fontSize: 22,
+    fontWeight: '700',
+    letterSpacing: 0.5,
+    marginTop: 2,
+  },
   list: {
     paddingHorizontal: 16,
-    paddingTop: 60,
+    paddingTop: 32,
     paddingBottom: 20,
   },
   card: {
-    backgroundColor: '#16213e',
+    backgroundColor: '#23262F',
     borderRadius: 16,
     padding: 16,
     marginBottom: 14,
@@ -199,7 +252,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   author: {
-    color: '#4f46e5',
+    color: '#FFBE0B',
     fontWeight: '700',
     fontSize: 15,
   },
@@ -208,13 +261,13 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   title: {
-    color: '#fff',
+    color: '#FFFFFF',
     fontSize: 18,
     fontWeight: '600',
     marginBottom: 6,
   },
   description: {
-    color: '#aaa',
+    color: '#B0B3B8',
     fontSize: 14,
     marginBottom: 10,
   },
@@ -231,7 +284,7 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
   },
   emptyText: {
-    color: '#888',
+    color: '#B0B3B8',
     fontSize: 16,
   },
 });

@@ -44,12 +44,11 @@ export function LoginScreen({ navigation }: Props) {
     >
       <View style={styles.inner}>
         <Text style={styles.title}>Snowball</Text>
-        <Text style={styles.subtitle}>Welcome back</Text>
 
         <TextInput
           style={styles.input}
           placeholder="Email"
-          placeholderTextColor="#888"
+          placeholderTextColor="#B0B3B8"
           keyboardType="email-address"
           autoCapitalize="none"
           value={email}
@@ -58,7 +57,7 @@ export function LoginScreen({ navigation }: Props) {
         <TextInput
           style={styles.input}
           placeholder="Password"
-          placeholderTextColor="#888"
+          placeholderTextColor="#B0B3B8"
           secureTextEntry
           value={password}
           onChangeText={setPassword}
@@ -66,7 +65,7 @@ export function LoginScreen({ navigation }: Props) {
 
         <TouchableOpacity style={styles.button} onPress={handleLogin} disabled={loading}>
           {loading ? (
-            <ActivityIndicator color="#fff" />
+            <ActivityIndicator color="#3A86FF" />
           ) : (
             <Text style={styles.buttonText}>Log In</Text>
           )}
@@ -85,7 +84,7 @@ export function LoginScreen({ navigation }: Props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1a1a2e',
+    backgroundColor: '#181A20',
   },
   inner: {
     flex: 1,
@@ -95,29 +94,29 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 36,
     fontWeight: 'bold',
-    color: '#fff',
+    color: '#FFFFFF',
     textAlign: 'center',
-    marginBottom: 8,
+    marginBottom: 80,
   },
   subtitle: {
     fontSize: 16,
-    color: '#aaa',
+    color: '#B0B3B8',
     textAlign: 'center',
     marginBottom: 40,
   },
   input: {
-    backgroundColor: '#16213e',
+    backgroundColor: '#23262F',
     borderRadius: 12,
     paddingHorizontal: 16,
     paddingVertical: 14,
     fontSize: 16,
-    color: '#fff',
+    color: '#FFFFFF',
     marginBottom: 16,
     borderWidth: 1,
-    borderColor: '#2a2a4a',
+    borderColor: '#23262F',
   },
   button: {
-    backgroundColor: '#e94560',
+    backgroundColor: '#FFBE0B',
     borderRadius: 12,
     paddingVertical: 16,
     alignItems: 'center',
@@ -125,12 +124,12 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   buttonText: {
-    color: '#fff',
+    color: '#181A20',
     fontSize: 18,
     fontWeight: '600',
   },
   linkText: {
-    color: '#aaa',
+    color: '#B0B3B8',
     textAlign: 'center',
     fontSize: 14,
   },

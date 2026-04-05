@@ -112,9 +112,10 @@ export function CreatePost() {
       style={styles.container}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
+
       <ScrollView contentContainerStyle={styles.inner} keyboardShouldPersistTaps="handled">
         <Text style={styles.heading}>
-          Hello {username}!{'\n'}
+          Hello <Text style={styles.username}>{username}</Text>!{"\n"}
           <Text style={styles.subheading}>What's on your mind?</Text>
         </Text>
 
@@ -122,7 +123,7 @@ export function CreatePost() {
         <TextInput
           style={styles.input}
           placeholder="What's on your mind?"
-          placeholderTextColor="#888"
+          placeholderTextColor="#B0B3B8"
           value={title}
           onChangeText={setTitle}
           maxLength={25}
@@ -132,7 +133,7 @@ export function CreatePost() {
         <TextInput
           style={[styles.input, styles.textArea]}
           placeholder="Add more details..."
-          placeholderTextColor="#888"
+          placeholderTextColor="#B0B3B8"
           multiline
           numberOfLines={4}
           textAlignVertical="top"
@@ -156,7 +157,7 @@ export function CreatePost() {
 
         <TouchableOpacity style={styles.button} onPress={handlePost} disabled={loading}>
           {loading ? (
-            <ActivityIndicator color="#fff" />
+            <ActivityIndicator color="#FFBE0B" />
           ) : (
             <Text style={styles.buttonText}>Post</Text>
           )}
@@ -180,71 +181,69 @@ const styles = StyleSheet.create({
   heading: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: '#f0eef6',
+    color: '#FFFFFF',
     marginBottom: 30,
     textAlign: 'center',
   },
   subheading: {
     fontSize: 23,
     fontWeight: '400',
-    color: '#8b8b9e',
+    color: '#B0B3B8',
+  },
+  username: {
+    color: '#FFBE0B',
+    fontWeight: 'bold',
   },
   label: {
     fontSize: 14,
-    color: '#8b8b9e',
+    color: '#B0B3B8',
     marginBottom: 6,
     marginLeft: 4,
   },
   input: {
-    backgroundColor: '#1a1a2e',
+    backgroundColor: '#23262F',
     borderRadius: 12,
     paddingHorizontal: 16,
     paddingVertical: 14,
     fontSize: 16,
-    color: '#f0eef6',
+    color: '#FFFFFF',
     marginBottom: 16,
-    borderWidth: 1,
-    borderColor: '#2d2b3d',
   },
   textArea: {
     minHeight: 100,
     paddingTop: 14,
   },
   button: {
-    backgroundColor: '#7c3aed',
+    backgroundColor: '#FFBE0B',
     borderRadius: 12,
     paddingVertical: 16,
     alignItems: 'center',
     marginTop: 8,
   },
   buttonText: {
-    color: '#fff',
+    color: '#181A20',
     fontSize: 18,
     fontWeight: '600',
   },
   imagePicker: {
-    backgroundColor: '#1a1a2e',
+    backgroundColor: '#23262F',
     borderRadius: 12,
     height: 180,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 8,
     overflow: 'hidden',
-    borderWidth: 1,
-    borderColor: '#2d2b3d',
   },
   imagePickerWithImage: {
-    backgroundColor: '#1a1a2e',
+    backgroundColor: '#23262F',
     borderRadius: 12,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 8,
     overflow: 'hidden',
-    borderWidth: 1,
-    borderColor: '#2d2b3d',
   },
   imagePickerText: {
-    color: '#6b6b80',
+    color: '#B0B3B8',
     fontSize: 16,
   },
   imagePreview: {
@@ -255,7 +254,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
   },
   removeImage: {
-    color: '#f87171',
+    color: '#ef4444',
     fontSize: 14,
     textAlign: 'center',
     marginBottom: 16,

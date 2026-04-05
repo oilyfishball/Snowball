@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   },
   contentText: {
     fontSize: 18,
-    color: '#fff',
+    color: '#FFFFFF', // Main text
     textAlign: 'center',
   },
 });
