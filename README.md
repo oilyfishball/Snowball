@@ -30,7 +30,7 @@ Users can authenticate, view a feed of posts, and create new posts.
 ### 1. Clone the Repository
 
 ```sh
-git clone <your-repo-url>
+git clone git@github.com:oilyfishball/Snowball.git
 cd Snowball
 ```
 
