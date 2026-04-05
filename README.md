@@ -46,7 +46,6 @@ npm install
   ```
   SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
   ```
-- The project already includes a sample `.env.local` for seeding.
 
 ### 4. Seed the Database (Optional, for fresh setup)
 
