@@ -38,7 +38,105 @@ cd Snowball
 
 ```sh
 npm install
+
 ```
+
+### 3. Set Up Supabase Database
+
+1. **Create a Supabase Project:**
+   - Go to [https://app.supabase.com/](https://app.supabase.com/) and create a new project.
+   - Note your Supabase project URL and API keys (anon/public and service role).
+
+2. **Configure Environment Variables:**
+   - In the project root, create a file named `.env.local` if it doesn't exist.
+   - Add your Supabase service role key (for seeding) to `.env.local`:
+     ```
+     SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
+     ```
+   - The app uses the anon/public key for client-side access, which is set in `lib/supabase.ts`.
+
+
+3. **Set Up Database Schema:**
+   - In the Supabase dashboard, use the SQL editor to run the following schema and policies:
+     ```sql
+     -- Profiles table
+     create table profiles (
+       id uuid references auth.users(id) on delete cascade primary key,
+       username text unique not null,
+       created_at timestamptz default now() not null
+     );
+
+     -- Posts table
+     create table posts (
+       id uuid default gen_random_uuid() primary key,
+       user_id uuid references profiles(id) on delete cascade not null,
+       title text not null,
+       description text,
+       image_url text,
+       created_at timestamptz default now() not null
+     );
+
+     -- Indexes
+     create index posts_user_id_idx on posts(user_id);
+     create index posts_created_at_idx on posts(created_at desc);
+
+     -- RLS policies
+     alter table profiles enable row level security;
+     alter table posts enable row level security;
+
+     create policy "Profiles are viewable by everyone"
+       on profiles for select using (true);
+
+     create policy "Users can update own profile"
+       on profiles for update using (auth.uid() = id);
+
+     create policy "Posts are viewable by everyone"
+       on posts for select using (true);
+
+     create policy "Users can create own posts"
+       on posts for insert with check (auth.uid() = user_id);
+
+     create policy "Users can update own posts"
+       on posts for update using (auth.uid() = user_id);
+
+     create policy "Users can delete own posts"
+       on posts for delete using (auth.uid() = user_id);
+
+     create policy "Authenticated users can upload post images"
+       on storage.objects for insert
+       to authenticated
+       with check (bucket_id = 'post-images');
+
+     create policy "Anyone can view post images"
+       on storage.objects for select
+       using (bucket_id = 'post-images');
+
+     -- Trigger to auto-create profile on user signup
+     create or replace function public.handle_new_user()
+     returns trigger as $$
+     begin
+       insert into public.profiles (id, username)
+       values (new.id, new.raw_user_meta_data->>'username');
+       return new;
+     end;
+     $$ language plpgsql security definer;
+
+     create trigger on_auth_user_created
+       after insert on auth.users
+       for each row execute function public.handle_new_user();
+     ```
+
+4. **(Optional) Configure Auth Triggers:**
+   - Set up a trigger to auto-create a profile when a new user signs up. See [Supabase docs](https://supabase.com/docs/guides/auth/managing-user-data#using-triggers) for details.
+
+5. **Seed the Database:**
+   - Run the seed script to populate Supabase with users and posts from `seed.json`:
+     ```sh
+     npx tsx scripts/seed.ts
+     ```
+   - This uses the credentials in `.env.local` and the data in `seed.json`.
+
+---
 
 ### 3. Configure Environment
 
