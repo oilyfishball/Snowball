@@ -1,0 +1,26 @@
+To get a smoother pull-to-refresh animation, you can use the 'react-native-animated-refresh-control' library.
+
+1. Install the package:
+   npm install react-native-animated-refresh-control
+
+2. Replace the built-in RefreshControl in Feed.tsx with AnimatedRefreshControl:
+
+   import AnimatedRefreshControl from 'react-native-animated-refresh-control';
+
+   ...
+
+   <FlatList
+     ...
+     refreshControl={
+       <AnimatedRefreshControl
+         refreshing={refreshing}
+         onRefresh={onRefresh}
+         colors={["#FFBE0B"]}
+       />
+     }
+     ...
+   />
+
+This will provide a much smoother and visually appealing pull-to-refresh experience.
+
+Would you like me to install the package and update your Feed.tsx now?

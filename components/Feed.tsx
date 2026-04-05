@@ -80,9 +80,9 @@ export function Feed() {
   }, []);
 
   const fetchPosts = useCallback(async (fromStart = true) => {
-    if (fromStart) {
+    if (fromStart && posts.length === 0) {
       setLoading(true);
-    } else {
+    } else if (!fromStart) {
       setLoadingMore(true);
     }
 
@@ -189,6 +189,8 @@ export function Feed() {
             refreshing={refreshing}
             onRefresh={onRefresh}
             tintColor="#FFBE0B"
+            colors={["#FFBE0B"]}
+            progressBackgroundColor="#181A20"
           />
         }
         onEndReached={onEndReached}

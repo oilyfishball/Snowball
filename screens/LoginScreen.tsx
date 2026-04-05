@@ -73,7 +73,7 @@ export function LoginScreen({ navigation }: Props) {
 
         <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
           <Text style={styles.linkText}>
-            Don't have an account? <Text style={styles.linkBold}>Sign Up</Text>
+            Don't have an account? <Text style={[styles.linkBold, { color: '#FFBE0B' }]}>Sign Up</Text>
           </Text>
         </TouchableOpacity>
       </View>

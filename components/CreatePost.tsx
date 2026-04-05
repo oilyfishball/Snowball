@@ -157,7 +157,7 @@ export function CreatePost() {
 
         <TouchableOpacity style={styles.button} onPress={handlePost} disabled={loading}>
           {loading ? (
-            <ActivityIndicator color="#FFBE0B" />
+            <ActivityIndicator color="#000" />
           ) : (
             <Text style={styles.buttonText}>Post</Text>
           )}

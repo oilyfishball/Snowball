@@ -33,6 +33,22 @@ export function SignUpScreen({ navigation }: Props) {
       return;
     }
     setLoading(true);
+    // Check if username exists in profiles table
+    const { data: existing, error: checkError } = await supabase
+      .from('profiles')
+      .select('username')
+      .eq('username', username.trim())
+      .maybeSingle();
+    if (checkError) {
+      setLoading(false);
+      Alert.alert('Sign Up Failed', 'Error checking username. Please try again.');
+      return;
+    }
+    if (existing) {
+      setLoading(false);
+      Alert.alert('Sign Up Failed', 'Username already exists. Please choose another.');
+      return;
+    }
     const { error } = await supabase.auth.signUp({
       email: email.trim(),
       password: password.trim(),
