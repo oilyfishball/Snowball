@@ -41,6 +41,8 @@ npm install
 
 ```
 
+**Note:** If you do not have Node.js installed, download and install it from [https://nodejs.org/](https://nodejs.org/). After installation, restart your terminal and run `npm install` again.
+
 ### 3. Set Up Supabase Database
 
 1. **Create a Supabase Project:**
@@ -61,6 +63,18 @@ npm install
      ```
    - These environment variables are used throughout the app for both client and server operations.
 
+---
+   ### **Where to find these values in Supabase:**
+
+   1. Go to the [Supabase dashboard](https://app.supabase.com) and select your project.
+   2. In the left sidebar, click on **Project Settings** (gear icon).
+   3. Under the **API** section, you will find:
+      - **SUPABASE_URL:** Labeled as "Project URL"
+      - **SUPABASE_ANON_KEY:** Labeled as "anon public" under "Project API keys"
+      - **SUPABASE_SERVICE_ROLE_KEY:** Labeled as "service_role" under "Project API keys"
+   4. Copy these values and paste them into your `.env.local` file as shown above.
+
+---
 
 3. **Set Up Database Schema:**
    - In the Supabase dashboard, use the SQL editor to run the following schema and policies:
@@ -137,8 +151,6 @@ npm install
 
 
 ### 4. Seed the Database (For fresh setup)
-
-- Make sure you have Node.js installed.
 - Run the seed script to populate Supabase with users and posts from `seed.json`:
   ```sh
   npx tsx scripts/seed.ts
