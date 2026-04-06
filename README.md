@@ -47,13 +47,19 @@ npm install
    - Go to [https://app.supabase.com/](https://app.supabase.com/) and create a new project.
    - Note your Supabase project URL and API keys (anon/public and service role).
 
-2. **Configure Environment Variables:**
+
+2. **Configure Environment Variables (CRUCIAL STEP):**
+
+   ⚠️ **This step is required for the app to work! If you skip it, the app will not be able to connect to Supabase and will fail to run.**
+
    - In the project root, create a file named `.env.local` if it doesn't exist.
-   - Add your Supabase service role key (for seeding) to `.env.local`:
+   - Add the following to your `.env.local` (replace with your actual values from the Supabase dashboard):
      ```
+     SUPABASE_URL=your_supabase_project_url
+     SUPABASE_ANON_KEY=your_supabase_anon_public_key
      SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
      ```
-   - The app uses the anon/public key for client-side access, which is set in `lib/supabase.ts`.
+   - These environment variables are used throughout the app for both client and server operations.
 
 
 3. **Set Up Database Schema:**
@@ -126,23 +132,11 @@ npm install
        for each row execute function public.handle_new_user();
      ```
 
-4. **Seed the Database:**
-   - Run the seed script to populate Supabase with users and posts from `seed.json`:
-     ```sh
-     npx tsx scripts/seed.ts
-     ```
-   - This uses the credentials in `.env.local` and the data in `seed.json`.
-
 ---
 
-### 3. Configure Environment
 
-- Ensure `.env.local` exists in the project root with your Supabase service role key:
-  ```
-  SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
-  ```
 
-### 4. Seed the Database (Optional, for fresh setup)
+### 4. Seed the Database (For fresh setup)
 
 - Make sure you have Node.js installed.
 - Run the seed script to populate Supabase with users and posts from `seed.json`:
@@ -151,21 +145,41 @@ npm install
   ```
 - This uses the credentials in `.env.local` and the data in `seed.json`.
 
-### 5. Start the App
+### 5. Install Expo Go App
 
-- For development (choose one):
-  ```sh
-  npx expo start
-  ```
-  or
-  ```sh
-  npm run android
-  ```
-  or
-  ```sh
-  npm run ios
-  ```
-- Follow the Expo CLI instructions to open the app on your device or simulator.
+Before running the app, you must install the Expo Go app on your mobile device:
+
+- **iOS:**
+  1. Open the App Store on your iPhone or iPad.
+  2. Search for "Expo Go".
+  3. Download and install the Expo Go app by Expo.
+
+- **Android:**
+  1. Open the Google Play Store on your Android device.
+  2. Search for "Expo Go".
+  3. Download and install the Expo Go app by Expo.
+
+### 6. Start the App
+
+To start the app, use **Expo Go** (required for all users):
+
+- Use this to quickly test on a physical device (iOS/Android) or in a web browser.
+- Starts the Expo development server and provides a QR code for the Expo Go app.
+```
+npx expo start
+```
+
+If you have trouble connecting your device to the development server (e.g., QR code does not work or network issues), try starting Expo with the tunnel option. This uses ngrok to create a secure tunnel:
+
+  1. Install ngrok globally if you don't have it:
+
+    npm install -g ngrok
+  2. Start Expo with the tunnel option:
+
+    npx expo start --tunnel
+
+Follow the Expo CLI instructions to open the app on your physical device or in the browser.
+
 
 ---
 
