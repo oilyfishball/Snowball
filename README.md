@@ -64,12 +64,12 @@ npm install
    - **Where to find these values in Supabase:**
 
       1. Go to the [Supabase dashboard](https://app.supabase.com) and select your project.
-      2. In the left sidebar, click on **Project Settings** (gear icon).
-      3. Under the **API** section, you will find:
+      2. Under the **Project Overview** section, you will find:
           - **SUPABASE_URL:** Labeled as "Project URL"
-          - **SUPABASE_ANON_KEY:** Labeled as "anon public" under "Project API keys"
-          - **SUPABASE_SERVICE_ROLE_KEY:** Labeled as "service_role" under "Project API keys"
-      4. Copy these values and paste them into your `.env.local` file as shown above.
+      4. Under the **Legacy anon, service_role API keys** section in **Project Settings -> API Keys**, you will find:
+          - **SUPABASE_ANON_KEY:** Labeled as "anon public"
+          - **SUPABASE_SERVICE_ROLE_KEY:** Labeled as "service_role"
+      5. Copy these values and paste them into your `.env.local` file as shown above.
 
 ---
 
