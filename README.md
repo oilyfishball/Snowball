@@ -202,7 +202,7 @@ Follow the Expo CLI instructions to open the app on your physical device or in t
 
 ## Notes
 
-- Tested on Expo Go (Android and iOS).
+- Tested on Expo Go (iOS).
 - No third-party OAuth; only email/password.
 - Biometric authentication is not required (email/password is allowed per spec).
 - All seed data and scripts are included.
