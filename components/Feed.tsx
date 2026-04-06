@@ -189,8 +189,6 @@ export function Feed() {
             refreshing={refreshing}
             onRefresh={onRefresh}
             tintColor="#FFBE0B"
-            colors={["#FFBE0B"]}
-            progressBackgroundColor="#181A20"
           />
         }
         onEndReached={onEndReached}

@@ -2,13 +2,11 @@ import { createClient } from '@supabase/supabase-js';
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import { config } from 'dotenv';
+import { SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY } from '../lib/secrets';
 
 config({ path: resolve(__dirname, '..', '.env.local') });
 
-const supabaseUrl = 'https://cxmumqgcroayesfzeqxs.supabase.co';
-const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
-
-const supabase = createClient(supabaseUrl, serviceRoleKey, {
+const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
   auth: { autoRefreshToken: false, persistSession: false },
 });
 
